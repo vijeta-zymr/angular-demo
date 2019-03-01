@@ -1,0 +1,23 @@
+<div *ngIf="rec" class="main-div">    
+    <h5 style="text-align:left">Total Records: {{rec?.items.length}}</h5>
+    <div *ngFor="let sr of rec.items | paginate: { itemsPerPage: 10, currentPage: p }"  class="inner-div">
+      <div class="border-div"></div>
+      <br/>
+      <div style="float:left">
+        <img src="{{sr.avatar_url}}" width="45px" height="45px">
+      </div>
+      <div style="float:right">
+        ID: {{sr.id}}
+        <br/>
+        Score: {{sr.score}}
+        <br/>
+        <a href="{{sr.html_url}}" target="blank">{{sr.login}}</a>
+      </div>
+      <br/>
+    </div>
+    <pagination-controls class="main-div" (pageChange)="p = $event"></pagination-controls>
+</div>  
+<div *ngIf="!rec" style="margin-left:5%;text-align:center">
+  <br/><br/>
+  Loading!!!!!!!
+</div>

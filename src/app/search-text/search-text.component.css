@@ -1,0 +1,9 @@
+.container {
+    max-width: 895px;
+}
+.left {
+    float: left;
+}
+.middle {
+    float: right;
+}

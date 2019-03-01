@@ -1,0 +1,25 @@
+
+<div class="container">
+  <h5>Github Search Functionality</h5>
+  <br/>
+  <div class="left">
+    <div class="form-group">
+      <label for="user">Github User:</label>
+      <input type="text" id="user" name="user" [(ngModel)]="usertxt" class="form-control" placeholder="Github User" style="height:30px;">
+    </div>
+  </div>
+  <div class="left">
+    <div class="form-group">
+      <label for="user">Github Repository:</label>
+      <input type="text" id="repos" name="repos" [(ngModel)]="repostxt" class="form-control" placeholder="Github Repository" style="height:30px;">
+    </div>    
+  </div>
+  <div class="middle">
+    <div class="form-group">
+      <label for="user">Github Followers:</label>
+      <input type="text" id="follow" name="follow" [(ngModel)]="followtxt" class="form-control" placeholder="Github Followers" style="height:30px;">
+    </div>    
+  </div>
+  <br/><br/>
+  <button id="btnSearch" (click)="search()" style="width:100px;height:35px;">Search</button>
+</div>
