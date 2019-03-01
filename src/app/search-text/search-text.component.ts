@@ -20,10 +20,10 @@ export class SearchTextComponent implements OnInit {
   ngOnInit() {}
 
   search() {
-    if(this.repostxt === 0 && this.followtxt === 0) {
-      this.router.navigate(['/search-list', this.usertxt]);
+    if (this.repostxt === 0 && this.followtxt === 0) {
+      this.router.navigate(['/search-list'], { queryParams: { user: this.usertxt } });
     } else {
-      this.router.navigate(['/search-list', this.usertxt, this.repostxt, this.followtxt]);
+      this.router.navigate(['/search-list'], { queryParams: { user: this.usertxt, repos: this.repostxt, follow: this.followtxt } });
     }
   }
 }

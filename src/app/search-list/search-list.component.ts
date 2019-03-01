@@ -4,13 +4,13 @@ import { SearchService } from '../services/search.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-import { routerTransition } from '../services/config/config.service';
+// import { routerTransition } from '../services/config/config.service';
 
 @Component({
   selector: 'app-search-list',
   templateUrl: './search-list.component.html',
   styleUrls: ['./search-list.component.css'],
-  animations: [routerTransition()],
+  // animations: [routerTransition()],
 })
 export class SearchListComponent implements OnInit {
   public user: string;
@@ -26,13 +26,12 @@ export class SearchListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.route.queryParams.subscribe(params => {
       console.log('params', params);
-      this.user = params.get('user');
-      this.repos = Number(params.get('repos'));
-      this.follow = Number(params.get('follow'));
+      this.user = params.user;
+      this.repos = Number(params.repos);
+      this.follow = Number(params.follow);
     });
-
     this.getAllList();
   }
 
@@ -55,6 +54,7 @@ export class SearchListComponent implements OnInit {
   OnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    // this.route.paramMap.unsubscribe();
   }
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,10 +13,14 @@ export class SearchService {
 
   getAllListBySearch(user: string, repos: number, follow: number): Observable<any> {
     console.log('in list service');
+    let params = new HttpParams();
+    params = params.append('q', user);
     if (repos === 0 && follow === 0) {
-      return this.http.get<any>(this.apiUrl + '?q=' + user);
+      return this.http.get<any>(this.apiUrl, {params});
     } else {
-      return this.http.get<any>(this.apiUrl + '?q=' + user + '+repos:%3E' + repos + '+followers:%3E' + follow);
+      params = params.append('repos', repos.toString());
+      params = params.append('followers', follow.toString());
+      return this.http.get<any>(this.apiUrl, {params});
     }
   }
 }

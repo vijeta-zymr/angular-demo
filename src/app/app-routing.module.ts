@@ -10,11 +10,7 @@ const routes: Routes = [
     component: SearchTextComponent
   },
   {
-    path: 'search-list/:user',
-    component: SearchListComponent
-  },
-  {
-    path: 'search-list/:user/:repos/:follow',
+    path: 'search-list',
     component: SearchListComponent
   },
   {
