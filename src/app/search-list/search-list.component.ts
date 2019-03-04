@@ -4,6 +4,7 @@ import { SearchService } from '../services/search.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 // import { routerTransition } from '../services/config/config.service';
 
 @Component({
@@ -13,6 +14,8 @@ import { ToastrService } from 'ngx-toastr';
   // animations: [routerTransition()],
 })
 export class SearchListComponent implements OnInit {
+  p: number = 1;
+  paramsSubscription: Subscription;
   public user: string;
   public repos: number;
   public follow: number;
@@ -26,7 +29,7 @@ export class SearchListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.paramsSubscription = this.route.queryParams.subscribe(params => {
       console.log('params', params);
       this.user = params.user;
       this.repos = Number(params.repos);
@@ -40,7 +43,6 @@ export class SearchListComponent implements OnInit {
    */
   private getAllList() {
     if (this.user) {
-      console.log('in list component', this.repos, this.follow);
       this.searchService.getAllListBySearch(this.user, this.repos, this.follow)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(result => {
@@ -54,7 +56,7 @@ export class SearchListComponent implements OnInit {
   OnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-    // this.route.paramMap.unsubscribe();
+    this.paramsSubscription.unsubscribe();
   }
 
 }

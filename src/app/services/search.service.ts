@@ -15,7 +15,7 @@ export class SearchService {
     console.log('in list service');
     let params = new HttpParams();
     params = params.append('q', user);
-    if (repos === 0 && follow === 0) {
+    if (isNaN(repos) && isNaN(follow)) {
       return this.http.get<any>(this.apiUrl, {params});
     } else {
       params = params.append('repos', repos.toString());

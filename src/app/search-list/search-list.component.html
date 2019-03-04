@@ -1,21 +1,34 @@
-<div *ngIf="rec" class="main-div">    
-    <h5 style="text-align:left">Total Records: {{rec?.items.length}}</h5>
-    <div *ngFor="let sr of rec.items | paginate: { itemsPerPage: 10, currentPage: p }"  class="inner-div">
+<div *ngIf="rec" style="width:80%;margin-left:20%;margin-right:20%">    
+    <h5 style="text-align:left">{{rec?.items.length}} Repository Results</h5>
+    <div class="inner-div" *ngFor="let sr of rec.items | paginate: { itemsPerPage: 10, currentPage: p }; let i = index" [attr.data-index]="i">
       <div class="border-div"></div>
-      <br/>
+      <br/>      
       <div style="float:left">
+        <!-- {{i+1}} -->
         <img src="{{sr.avatar_url}}" width="45px" height="45px">
       </div>
       <div style="float:right">
+        <a href="{{sr.html_url}}" target="blank">{{sr.login}}</a>
+        <br/>
         ID: {{sr.id}}
         <br/>
         Score: {{sr.score}}
-        <br/>
-        <a href="{{sr.html_url}}" target="blank">{{sr.login}}</a>
       </div>
       <br/>
     </div>
-    <pagination-controls class="main-div" (pageChange)="p = $event"></pagination-controls>
+    <br/>
+    <div style="width:80%">      
+      <div style="float:left">
+        <span class="pagination-info itemCount">
+          {{(p-1)*10+1}}-
+          {{p*10}} 
+          of {{rec?.items.length}} Records
+        </span>
+      </div>
+      <div style="float:right">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>    
 </div>  
 <div *ngIf="!rec" style="margin-left:5%;text-align:center">
   <br/><br/>

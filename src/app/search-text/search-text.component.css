@@ -1,9 +1,14 @@
 .container {
-    max-width: 895px;
+    max-width: 1050px;
 }
 .left {
     float: left;
 }
+
 .middle {
+    margin-left:5%;
+    float: left;
+}
+.right {
     float: right;
 }

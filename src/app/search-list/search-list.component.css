@@ -1,12 +1,6 @@
 .border-div{
     border-bottom: 1px solid gray
 }
-.main-div{
-    margin-left:40%;text-align:center
-}
 .inner-div{
-    width:40%;height:130px;
-}
-#toast-container > div {
-    opacity:1;
+    width:80%;height:130px;
 }

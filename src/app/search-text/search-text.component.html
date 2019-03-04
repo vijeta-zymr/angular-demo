@@ -2,24 +2,35 @@
 <div class="container">
   <h5>Github Search Functionality</h5>
   <br/>
-  <div class="left">
-    <div class="form-group">
-      <label for="user">Github User:</label>
-      <input type="text" id="user" name="user" [(ngModel)]="usertxt" class="form-control" placeholder="Github User" style="height:30px;">
+  <form [formGroup]="searchForm" (ngSubmit)="search()">
+    <div class="left">
+      <div class="form-group">
+        <label for="user">Github User:</label>
+        <input type="text" id="user" name="user" formControlName="user" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.user.errors }" placeholder="Github User" style="height:30px;">
+        <div *ngIf="submitted && f.user.errors" class="invalid-feedback">
+          <div *ngIf="f.user.errors.required">User Name is required.</div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="left">
-    <div class="form-group">
-      <label for="user">Github Repository:</label>
-      <input type="text" id="repos" name="repos" [(ngModel)]="repostxt" class="form-control" placeholder="Github Repository" style="height:30px;">
-    </div>    
-  </div>
-  <div class="middle">
-    <div class="form-group">
-      <label for="user">Github Followers:</label>
-      <input type="text" id="follow" name="follow" [(ngModel)]="followtxt" class="form-control" placeholder="Github Followers" style="height:30px;">
-    </div>    
-  </div>
-  <br/><br/>
-  <button id="btnSearch" (click)="search()" style="width:100px;height:35px;">Search</button>
+    <div class="middle">
+      <div class="form-group">
+        <label for="user">Github Repository:</label>
+        <input type="text" id="repos" name="repos" formControlName="repos" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.repos.errors }" placeholder="Github Repository" style="height:30px;">
+        <div *ngIf="submitted && f.repos.errors" class="invalid-feedback">
+          <div *ngIf="f.repos.errors.maxlength">Repository length must be less than 6 digits.</div>
+        </div>
+      </div>    
+    </div>
+    <div class="right">
+      <div class="form-group">
+        <label for="user">Github Followers:</label>
+        <input type="text" id="follow" name="follow" formControlName="follow" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.follow.errors }" placeholder="Github Followers" style="height:30px;">
+        <div *ngIf="submitted && f.follow.errors" class="invalid-feedback">
+          <div *ngIf="f.follow.errors.maxlength">Follower length must be less than 6 digits.</div>
+        </div>
+      </div>    
+    </div>
+    <br/><br/><br/><br/>
+    <button id="btnSearch" style="width:100px;height:35px;">Search</button>
+  </form>  
 </div>
