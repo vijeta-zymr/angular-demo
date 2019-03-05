@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-sm-2" style="border-right:1px solid gray;height:700px;">
+    Toolbox
+    <ul>
+      <li *ngFor="let item of elements" draggable [dragClass]="'drag-over'" [dragData]="item">        
+        {{item.name}}
+      </li>
+    </ul> 
+  </div>
+  <div class="col-sm-8" style="border-right:1px solid gray;height:700px;">
+    HTML
+    <div class="card card-outline-primary mb-3" droppable (dragover)="allowDrop($event)" [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'"
+            (onDrop)="onElementDrop($event)" style="border:1px solid gray;height:600px;">
+      <p>Drop items here</p>
+      <div>
+          <div #div></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2" style="border-right:1px solid gray;height:700px;">
+    Properties
+  </div>
+</div>

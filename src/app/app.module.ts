@@ -7,12 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgDragDropModule } from 'ng-drag-drop';
 // self-made components
 import { SearchListComponent } from './search-list/search-list.component';
 import { SearchTextComponent } from './search-text/search-text.component';
+import { DragableComponent } from './components/dragable/dragable.component';
+import { DemodragableComponent } from './components/demodragable/demodragable.component';
 
 @NgModule({
-  declarations: [AppComponent, SearchListComponent, SearchTextComponent],
+  declarations: [AppComponent, SearchListComponent, SearchTextComponent, DragableComponent, DemodragableComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,6 +24,7 @@ import { SearchTextComponent } from './search-text/search-text.component';
     BrowserAnimationsModule,
     HttpClientModule,
     NgxPaginationModule,
+    NgDragDropModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',
