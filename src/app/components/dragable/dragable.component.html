@@ -40,13 +40,37 @@
           </td>
         </tr>
         <tr>
-            <td>
-              <label for="size">Value:</label>
-            </td>
-            <td>
-              <input type="text" id="elementValue" name="elementValue" [(ngModel)]="elementValue" (keypress)="onPropertyChange($event,'value')" style="width:130px;">
-            </td>
-          </tr>
+          <td>
+            <label for="size">Value:</label>
+          </td>
+          <td>
+            <input type="text" id="elementValue" name="elementValue" [(ngModel)]="elementValue" (keyup)="onPropertyChange($event,'value')" style="width:130px;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="size">Text:</label>
+          </td>
+          <td>
+            <input type="text" id="elementText" name="elementText" [(ngModel)]="elementText" (keyup)="onPropertyChange($event,'text')" style="width:130px;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="size">Width:</label>
+          </td>
+          <td>
+            <input type="text" id="elementWidth" name="elementWidth" [(ngModel)]="elementWidth" (keyup)="onPropertyChange($event,'width')" style="width:130px;">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="size">Height:</label>
+          </td>
+          <td>
+            <input type="text" id="elementHeight" name="elementHeight" [(ngModel)]="elementHeight" (keyup)="onPropertyChange($event,'height')" style="width:130px;">
+          </td>
+        </tr>
       </table>
     </div>
   </div>
