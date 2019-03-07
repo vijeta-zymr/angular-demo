@@ -11,7 +11,7 @@
   </div>
   <div class="col-sm-8" style="border-right:1px solid gray;height:650px;">
     HTML
-    <div class="card card-outline-primary mb-3" droppable (dragover)="allowDrop($event)" [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'"
+    <div class="card card-outline-primary mb-3" droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'"
             (onDrop)="onElementDrop($event)" style="border:1px solid gray;height:600px;">
       <p>Drop items here</p>
       <div>
@@ -20,18 +20,18 @@
     </div>
   </div>
   <div class="col-sm-2" style="border-right:1px solid gray;height:650px;">
-    Properties
+    Properties - {{item}}
     <div style="border:1px solid gray;height:600px;">
       <table>
           <tr>
-              <td>
-                <label for="size">Id:</label>
-              </td>
-              <td>
-                <input type="text" id="elementId" name="elementId" [(ngModel)]="elementId" style="width:130px;">
-              </td>
-            </tr>
-        <tr>
+            <td>
+              <label for="size">Id:</label>
+            </td>
+            <td>
+              <input type="text" id="elementId" name="elementId" [(ngModel)]="elementId" readonly="true" style="width:130px;">
+            </td>
+          </tr>
+        <tr *ngIf="size">
           <td>
             <label for="size">Size:</label>
           </td>
@@ -39,7 +39,7 @@
             <input type="text" id="size" name="size" [(ngModel)]="size" (keyup)="onPropertyChange($event,'size')" style="width:130px;">
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="displayElementValue">
           <td>
             <label for="size">Value:</label>
           </td>
@@ -47,13 +47,24 @@
             <input type="text" id="elementValue" name="elementValue" [(ngModel)]="elementValue" (keyup)="onPropertyChange($event,'value')" style="width:130px;">
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="displayElementText">
           <td>
             <label for="size">Text:</label>
           </td>
           <td>
             <input type="text" id="elementText" name="elementText" [(ngModel)]="elementText" (keyup)="onPropertyChange($event,'text')" style="width:130px;">
           </td>
+        </tr>
+        <tr *ngIf="displaySrc">
+          <td>
+            <label for="size">Src:</label>
+          </td>
+          <td>
+            <input type="text" id="src" name="src" [(ngModel)]="src" (keyup)="onPropertyChange($event,'href')" style="width:130px;">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2"><br/>--------  Set Style  -------</td>
         </tr>
         <tr>
           <td>

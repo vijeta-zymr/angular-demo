@@ -15,11 +15,16 @@ export class DragableComponent implements OnInit {
     {name: 'Link', id: 4},
     {name: 'Button', id: 5}
   ];
+    public item: string;
     public elementCount = 1;
-    public size: number;
     public elementId: string;
+    public size: number;
+    public displayElementValue: boolean;
     public elementValue: string;
+    public displayElementText: boolean;
     public elementText: string;
+    public displaySrc: boolean;
+    public src: string;
     public elementWidth: number;
     public elementHeight: number;
 
@@ -35,74 +40,42 @@ export class DragableComponent implements OnInit {
   onElementDrop(e: DropEvent) {
     console.log('in element drop metthod', e.dragData);
     if (e.dragData.id === 1) {
+      this.item = 'TextBox';
+      const dragdiv = this.renderer.createElement('div');
       const input = this.renderer.createElement('input');
       this.renderer.setProperty(input, 'id', 'txt' + this.elementCount);
-      this.renderer.setProperty(input, 'readonly', 'true');
-      this.renderer.appendChild(this.div.nativeElement, input);
-      this.renderer.listen(input, 'click', (event) => {
-        console.log('onclick event', event);
-        const target = event.target || event.srcElement || event.currentTarget;
-        const Attr = target.attributes;
-        this.elementId = Attr[0].ownerElement.id;
-        this.size = Attr[0].ownerElement.size;
-        this.elementValue = Attr[0].ownerElement.value;
-        this.elementText = Attr[0].ownerElement.text;
-        this.elementWidth = Attr[0].ownerElement.width;
-        this.elementHeight = Attr[0].ownerElement.height;
-      });
-      this.elementCount ++;
+      this.renderer.setAttribute(input, 'readonly', 'true');
+      this.renderer.appendChild(dragdiv, input);
+      this.renderer.appendChild(this.div.nativeElement, dragdiv);
+      this.setPropertiesOfElement(input, 'textbox');
       // input.addEventListener('click', this.onClick.bind(this));
-      // this.div.nativeElement.insertAdjacentHTML('beforeend', '<input type="text" #text1 onclick="showProperty(1)">');
+      // this.div.nativeElement.insertAdjacentHTML('beforeend', '<input type="textbox" #textbox1 onclick="showProperty(1)">');
     } else if (e.dragData.id === 2) {
-      this.div.nativeElement.insertAdjacentHTML('beforeend', '<label for="lbl" #lbl id="lbl' + this.elementCount + '">Label</label>');
+      this.item = 'Label';
+      this.div.nativeElement.insertAdjacentHTML('beforeend',
+       '<div draggable="true" class="drag-handle" ng-reflect-drag-class="drag-over" ng-reflect-drag-data=' +
+       {name: 'Label', id: 'lbl' + this.elementCount} + '><label for="lbl" id="lbl' + this.elementCount + '">Label</label></div>');
       const elem: Element = document.getElementById('lbl' + this.elementCount);
-      this.renderer.listen(elem, 'click', (event) => {
-        console.log('onclick event', event);
-        const target = event.target || event.srcElement || event.currentTarget;
-        const Attr = target.attributes;
-        this.elementId = Attr[0].ownerElement.id;
-        this.size = Attr[0].ownerElement.size;
-        this.elementValue = Attr[0].ownerElement.value;
-        this.elementText = Attr[0].ownerElement.text;
-        this.elementWidth = Attr[0].ownerElement.width;
-        this.elementHeight = Attr[0].ownerElement.height;
-      });
-      this.elementCount ++;
+      this.setPropertiesOfElement(elem, 'label');
     } else if (e.dragData.id === 3) {
-      this.div.nativeElement.insertAdjacentHTML('beforeend', '<h1>Header</h1>');
+      this.item = 'Header';
+      this.div.nativeElement.insertAdjacentHTML('beforeend',
+       '<div draggable="true" class="drag-handle" ng-reflect-drag-class="drag-over" ng-reflect-drag-data=' +
+       {name: 'Header', id: 'lbl' + this.elementCount} + '><h1 id="header' + this.elementCount + '">Header</h1></div>');
+      const elem: Element = document.getElementById('header' + this.elementCount);
+      this.setPropertiesOfElement(elem, 'header');
     } else if (e.dragData.id === 4) {
-      this.div.nativeElement.insertAdjacentHTML('beforeend', '<a href="#" id="link' + this.elementCount + '">Link</a>');
+      this.item = 'Link';
+      this.div.nativeElement.insertAdjacentHTML('beforeend', '<a href="#" id="link' + this.elementCount + '" readonly>Link</a>');
       const elem: Element = document.getElementById('link' + this.elementCount);
-      this.renderer.listen(elem, 'click', (event) => {
-        console.log('onclick event', event);
-        const target = event.target || event.srcElement || event.currentTarget;
-        const Attr = target.attributes;
-        this.elementId = Attr[0].ownerElement.id;
-        this.size = Attr[0].ownerElement.size;
-        this.elementValue = Attr[0].ownerElement.value;
-        this.elementText = Attr[0].ownerElement.text;
-        this.elementWidth = Attr[0].ownerElement.width;
-        this.elementHeight = Attr[0].ownerElement.height;
-      });
-      this.elementCount ++;
+      this.setPropertiesOfElement(elem, 'link');
     } else if (e.dragData.id === 5) {
+      this.item = 'Button';
       const input = this.renderer.createElement('button');
       this.renderer.setProperty(input, 'id', 'btn' + this.elementCount);
+      input.innerHTML = 'Click me!!';
       this.renderer.appendChild(this.div.nativeElement, input);
-      this.renderer.listen(input, 'click', (event) => {
-        console.log('onclick event', event);
-        const target = event.target || event.srcElement || event.currentTarget;
-        const Attr = target.attributes;
-        this.elementId = Attr[0].ownerElement.id;
-        this.size = Attr[0].ownerElement.size;
-        this.elementValue = Attr[0].ownerElement.value;
-        this.elementText = Attr[0].ownerElement.text;
-        this.elementWidth = Attr[0].ownerElement.width;
-        this.elementHeight = Attr[0].ownerElement.height;
-      });
-      this.elementCount ++;
-      // input.addEventListener('click', this.onClick.bind(this));
-      // this.div.nativeElement.insertAdjacentHTML('beforeend', '<input type="text" #text1 onclick="showProperty(1)">');
+      this.setPropertiesOfElement(input, 'button');
     } else {
       this.div.nativeElement.insertAdjacentHTML('beforeend', '<div></div>');
     }
@@ -110,9 +83,64 @@ export class DragableComponent implements OnInit {
   onClick(event) {
     console.log('onclick event', event);
   }
+  setPropertiesOfElement(input: Element, type: string) {
+    this.renderer.listen(input, 'click', (event) => {
+      console.log('onclick event', input);
+      this.item = type;
+      const target = event.target || event.srcElement || event.currentTarget;
+      const Attr = target.attributes;
+      // fetch id of elemennt
+      this.elementId = Attr[0].ownerElement.id;
+      // fetch size of textboxbox
+      if (type === 'textbox') {
+        this.size = Attr[0].ownerElement.size;
+      } else {
+        this.size = null;
+      }
+      // fetch value of element
+      if (type === 'textbox') {
+        this.displayElementValue = true;
+        this.elementValue = Attr[0].ownerElement.value;
+      } else {
+        this.displayElementValue = false;
+        this.elementValue = null;
+      }
+      // fetch textbox of element
+      if (type === 'label' || type === 'header' || type === 'link' || type === 'button') {
+        this.displayElementText = true;
+        this.elementText = Attr[0].ownerElement.textbox;
+      } else {
+        this.displayElementText = false;
+        this.elementText = null;
+      }
+      // fetch href of element
+      if (type === 'link') {
+        this.displaySrc = true;
+        this.src = (Attr[0].ownerElement.href).replace('http://localhost:4200/', '');
+      } else {
+        this.displaySrc = false;
+        this.src = null;
+      }
+      // fetch width of element
+      this.elementWidth = Attr[0].ownerElement.width;
+      // fetch height of element
+      this.elementHeight = Attr[0].ownerElement.height;
+    });
+    this.elementCount ++;
+  }
   onPropertyChange(event: any, property: string) {
-    console.log('on property change', event.target.value);
     const elem: Element = document.getElementById(this.elementId);
-    this.renderer.setAttribute(elem, property, event.target.value);
+    console.log('on property change', elem);
+    if (property === 'text') {
+      elem.innerHTML = event.target.value;
+    } else if (property === 'href' && event.target.value === '') {
+      this.renderer.removeAttribute(elem, property);
+    } else if (property === 'href' && event.target.value !== '') {
+      this.renderer.setAttribute(elem, property, '#' + event.target.value);
+    } else if (property === 'width' || property === 'height') {
+      this.renderer.setStyle(elem, property, event.target.value + 'px');
+    } else {
+      this.renderer.setAttribute(elem, property, event.target.value);
+    }
   }
 }
