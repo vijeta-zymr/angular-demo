@@ -42,6 +42,7 @@ export class DragableComponent implements OnInit {
     if (e.dragData.id === 1) {
       this.item = 'TextBox';
       const dragdiv = this.renderer.createElement('div');
+      this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('input');
       this.renderer.setProperty(input, 'id', 'txt' + this.elementCount);
       this.renderer.setAttribute(input, 'readonly', 'true');
@@ -53,28 +54,31 @@ export class DragableComponent implements OnInit {
     } else if (e.dragData.id === 2) {
       this.item = 'Label';
       this.div.nativeElement.insertAdjacentHTML('beforeend',
-       '<div draggable="true" class="drag-handle" ng-reflect-drag-class="drag-over" ng-reflect-drag-data=' +
-       {name: 'Label', id: 'lbl' + this.elementCount} + '><label for="lbl" id="lbl' + this.elementCount + '">Label</label></div>');
+       '<div _ngcontent-c1 class="border-div"><label for="lbl" id="lbl' + this.elementCount + '">Label</label></div>');
       const elem: Element = document.getElementById('lbl' + this.elementCount);
       this.setPropertiesOfElement(elem, 'label');
     } else if (e.dragData.id === 3) {
       this.item = 'Header';
       this.div.nativeElement.insertAdjacentHTML('beforeend',
-       '<div draggable="true" class="drag-handle" ng-reflect-drag-class="drag-over" ng-reflect-drag-data=' +
+       '<div _ngcontent-c1 draggable="true" class="border-div" ng-reflect-drag-class="drag-over" ng-reflect-drag-data=' +
        {name: 'Header', id: 'lbl' + this.elementCount} + '><h1 id="header' + this.elementCount + '">Header</h1></div>');
       const elem: Element = document.getElementById('header' + this.elementCount);
       this.setPropertiesOfElement(elem, 'header');
     } else if (e.dragData.id === 4) {
       this.item = 'Link';
-      this.div.nativeElement.insertAdjacentHTML('beforeend', '<a href="#" id="link' + this.elementCount + '" readonly>Link</a>');
+      this.div.nativeElement.insertAdjacentHTML('beforeend',
+       '<div _ngcontent-c1 class="border-div"><a href="#" id="link' + this.elementCount + '" readonly>Link</a></div>');
       const elem: Element = document.getElementById('link' + this.elementCount);
       this.setPropertiesOfElement(elem, 'link');
     } else if (e.dragData.id === 5) {
       this.item = 'Button';
+      const dragdiv = this.renderer.createElement('div');
+      this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('button');
       this.renderer.setProperty(input, 'id', 'btn' + this.elementCount);
       input.innerHTML = 'Click me!!';
-      this.renderer.appendChild(this.div.nativeElement, input);
+      this.renderer.appendChild(dragdiv, input);
+      this.renderer.appendChild(this.div.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'button');
     } else {
       this.div.nativeElement.insertAdjacentHTML('beforeend', '<div></div>');
@@ -127,20 +131,27 @@ export class DragableComponent implements OnInit {
       this.elementHeight = Attr[0].ownerElement.height;
     });
     this.elementCount ++;
+    this.displaySrc = true;
   }
-  onPropertyChange(event: any, property: string) {
-    const elem: Element = document.getElementById(this.elementId);
-    console.log('on property change', elem);
-    if (property === 'text') {
-      elem.innerHTML = event.target.value;
-    } else if (property === 'href' && event.target.value === '') {
-      this.renderer.removeAttribute(elem, property);
-    } else if (property === 'href' && event.target.value !== '') {
-      this.renderer.setAttribute(elem, property, '#' + event.target.value);
-    } else if (property === 'width' || property === 'height') {
+  onPropertyChange(event: any, property: string, pc: number) {
+    console.log('pc', pc);
+    if (pc === 2) {
+      const elem: Element = document.getElementById(this.elementId).parentElement;
       this.renderer.setStyle(elem, property, event.target.value + 'px');
     } else {
-      this.renderer.setAttribute(elem, property, event.target.value);
+      const elem: Element = document.getElementById(this.elementId);
+      console.log('on property change', elem);
+      if (property === 'text') {
+        elem.innerHTML = event.target.value;
+      } else if (property === 'href' && event.target.value === '') {
+        this.renderer.removeAttribute(elem, property);
+      } else if (property === 'href' && event.target.value !== '') {
+        this.renderer.setAttribute(elem, property, '#' + event.target.value);
+      } else if (property === 'width' || property === 'height') {
+        this.renderer.setStyle(elem, property, event.target.value + 'px');
+      } else {
+        this.renderer.setAttribute(elem, property, event.target.value);
+      }
     }
   }
 }
