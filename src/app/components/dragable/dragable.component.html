@@ -28,7 +28,7 @@
               <label for="size">Id:</label>
             </td>
             <td>
-              <input type="text" id="elementId" name="elementId" [(ngModel)]="elementId" readonly="true" style="width:130px;">
+              <input type="text" id="elementId" name="elementId" [(ngModel)]="elementId" readonly="true" style="width:100px;">
             </td>
           </tr>
         <tr *ngIf="size">
@@ -36,7 +36,15 @@
             <label for="size">Size:</label>
           </td>
           <td>
-            <input type="text" id="size" name="size" [(ngModel)]="size" (keyup)="onPropertyChange($event,'size',1)" style="width:130px;">
+            <input type="text" id="size" name="size" [(ngModel)]="size" (keyup)="onPropertyChange($event,'size',1)" style="width:100px;">
+          </td>
+        </tr>
+        <tr *ngIf="displayPlaceholder">
+          <td>
+            <label for="placeholder">Placeholder:</label>
+          </td>
+          <td>
+            <input type="text" id="placeholder" name="placeholder" [(ngModel)]="placeholder" (keyup)="onPropertyChange($event,'placeholder',1)" style="width:100px;">
           </td>
         </tr>
         <tr *ngIf="displayElementValue">
@@ -44,7 +52,7 @@
             <label for="size">Value:</label>
           </td>
           <td>
-            <input type="text" id="elementValue" name="elementValue" [(ngModel)]="elementValue" (keyup)="onPropertyChange($event,'value',1)" style="width:130px;">
+            <input type="text" id="elementValue" name="elementValue" [(ngModel)]="elementValue" (keyup)="onPropertyChange($event,'value',1)" style="width:100px;">
           </td>
         </tr>
         <tr *ngIf="displayElementText">
@@ -52,7 +60,7 @@
             <label for="size">Text:</label>
           </td>
           <td>
-            <input type="text" id="elementText" name="elementText" [(ngModel)]="elementText" (keyup)="onPropertyChange($event,'text',1)" style="width:130px;">
+            <input type="text" id="elementText" name="elementText" [(ngModel)]="elementText" (keyup)="onPropertyChange($event,'text',1)" style="width:100px;">
           </td>
         </tr>
         <tr *ngIf="displaySrc">
@@ -60,7 +68,7 @@
             <label for="size">Src:</label>
           </td>
           <td>
-            <input type="text" id="src" name="src" [(ngModel)]="src" (keyup)="onPropertyChange($event,'href',1)" style="width:130px;">
+            <input type="text" id="src" name="src" [(ngModel)]="src" (keyup)="onPropertyChange($event,'href',1)" style="width:100px;">
           </td>
         </tr>
         <tr>
@@ -71,7 +79,7 @@
             <label for="size">Width:</label>
           </td>
           <td>
-            <input type="text" id="elementWidth" name="elementWidth" [(ngModel)]="elementWidth" (keyup)="onPropertyChange($event,'width',1)" style="width:130px;">
+            <input type="text" id="elementWidth" name="elementWidth" [(ngModel)]="elementWidth" (keyup)="onPropertyChange($event,'width',1)" style="width:100px;">
           </td>
         </tr>
         <tr>
@@ -79,7 +87,7 @@
             <label for="size">Height:</label>
           </td>
           <td>
-            <input type="text" id="elementHeight" name="elementHeight" [(ngModel)]="elementHeight" (keyup)="onPropertyChange($event,'height',1)" style="width:130px;">
+            <input type="text" id="elementHeight" name="elementHeight" [(ngModel)]="elementHeight" (keyup)="onPropertyChange($event,'height',1)" style="width:100px;">
           </td>
         </tr>
         <tr>
@@ -87,7 +95,27 @@
             <label for="size">Div Width:</label>
           </td>
           <td>
-            <input type="text" id="divWidth" name="divWidth" [(ngModel)]="divWidth" (keyup)="onPropertyChange($event,'width',2)" style="width:130px;">
+            <input type="text" id="divWidth" name="divWidth" [(ngModel)]="divWidth" (keyup)="onPropertyChange($event,'width',2)" style="width:100px;">
+          </td>
+        </tr>
+        <tr *ngIf="itemSelected">
+          <td>
+            <label for="size">Div Align:</label>
+          </td>
+          <td>
+            <select [(ngModel)]="selectedAlignValue" (change)="alignValueChange($event)"  style="width:100px;">
+              <option *ngFor="let v of alignValues" [value]="v.id">  
+                {{v.name}}
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="size">Table Column:</label>
+          </td>
+          <td>
+            <input type="text" id="tableColumn" name="tableColumn" [(ngModel)]="tableColumn" (keyup)="onPropertyChange($event,'column',1)" style="width:100px;">
           </td>
         </tr>
       </table>
