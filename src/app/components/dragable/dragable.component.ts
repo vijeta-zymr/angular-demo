@@ -8,6 +8,7 @@ import { DropEvent } from 'ng-drag-drop';
 })
 export class DragableComponent implements OnInit {
   @ViewChild('div') div: ElementRef;
+  @ViewChild('mainDroppableDiv') mainDroppableDiv: ElementRef;
   public elements = [
     {name: 'Textbox', id: 1},
     {name: 'Label', id: 2},
@@ -56,6 +57,8 @@ export class DragableComponent implements OnInit {
     if (e.dragData.id === 1) {
       this.item = 'TextBox';
       const dragdiv = this.renderer.createElement('div');
+      // set draggable attribute for new div element
+      this.renderer.setAttribute(dragdiv, 'draggable', 'true');
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('input');
       this.renderer.setProperty(input, 'id', 'txt' + this.elementCount);
@@ -69,6 +72,8 @@ export class DragableComponent implements OnInit {
     } else if (e.dragData.id === 2) {
       this.item = 'Label';
       const dragdiv = this.renderer.createElement('div');
+      // set draggable attribute for new div element
+      this.renderer.setAttribute(dragdiv, 'draggable', 'true');
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('label');
       const text = this.renderer.createText('label');
@@ -81,6 +86,8 @@ export class DragableComponent implements OnInit {
     } else if (e.dragData.id === 3) {
       this.item = 'Header';
       const dragdiv = this.renderer.createElement('div');
+      // set draggable attribute for new div element
+      this.renderer.setAttribute(dragdiv, 'draggable', 'true');
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('h1');
       const text = this.renderer.createText('h1');
@@ -93,6 +100,8 @@ export class DragableComponent implements OnInit {
     } else if (e.dragData.id === 4) {
       this.item = 'Link';
       const dragdiv = this.renderer.createElement('div');
+      // set draggable attribute for new div element
+      this.renderer.setAttribute(dragdiv, 'draggable', 'true');
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('a');
       const text = this.renderer.createText('link');
@@ -105,6 +114,8 @@ export class DragableComponent implements OnInit {
     } else if (e.dragData.id === 5) {
       this.item = 'Button';
       const dragdiv = this.renderer.createElement('div');
+      // set draggable attribute for new div element
+      this.renderer.setAttribute(dragdiv, 'draggable', 'true');
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('button');
       this.renderer.setProperty(input, 'id', 'btn' + this.elementCount);
@@ -192,12 +203,23 @@ export class DragableComponent implements OnInit {
       } else if (property === 'width' || property === 'height') {
         this.renderer.setStyle(elem, property, event.target.value + 'px');
       } else if (property === 'column') {
+        // remove original droppable div
+        this.renderer.removeAttribute(this.mainDroppableDiv.nativeElement, 'droppable');
+        this.renderer.removeAttribute(this.mainDroppableDiv.nativeElement, 'class');
+        this.renderer.removeAttribute(this.mainDroppableDiv.nativeElement, 'onDrop');
         elem.innerHTML = '';
         const tr = this.renderer.createElement('tr');
         this.renderer.appendChild(elem, tr);
         for (let tdi = 1; tdi <= event.target.value; tdi++) {
           const td = this.renderer.createElement('td');
           this.renderer.appendChild(tr, td);
+          const dropableDiv = this.renderer.createElement('div');
+          // this.renderer.addClass(dropableDiv, 'card card-outline-primary mb-3');
+          this.renderer.setAttribute(dropableDiv, 'droppable', 'true');
+          this.renderer.listen(dropableDiv, 'onDrop', (ev) => {
+            this.onElementDrop(ev);
+          });
+          this.renderer.appendChild(td, dropableDiv);
         }
       } else {
         this.renderer.setAttribute(elem, property, event.target.value);

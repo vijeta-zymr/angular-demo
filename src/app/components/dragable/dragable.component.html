@@ -11,7 +11,8 @@
   </div>
   <div class="col-sm-8" style="border-right:1px solid gray;height:650px;">
     HTML
-    <div class="card card-outline-primary mb-3" droppable [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'"
+    <!-- [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'" -->
+    <div #mainDroppableDiv class="card card-outline-primary mb-3" droppable 
             (onDrop)="onElementDrop($event)" style="border:1px solid gray;height:600px;">
       <p>Drop items here</p>
       <div>
