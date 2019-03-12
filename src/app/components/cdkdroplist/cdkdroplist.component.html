@@ -23,3 +23,23 @@
       <div class="example-box" *ngFor="let student2 of students2" cdkDrag>{{student2.name}}</div>
     </div>
   </div>
+  -------------------------------------------------------------------
+  <form [formGroup]="myForm">
+    <input formControlName="title" />
+    <div cdkDropList class="example-list" (cdkDropListDropped)="dropSecond($event)">
+      <div [id]="i" class="example-box" *ngFor="let item of myForm.get('items').controls; let i=index;" cdkDrag #elem="cdkDrag" (mouseenter)="enter(i)">
+        <span cdkDragHandle>drag</span>
+        <div [formGroup]="item">
+        <input type="text" formControlName="name">
+        <select formControlName="note">
+          <option [hidden]="elem.moved">{{activeNote}}</option>
+          <option>foo</option>
+          <option>bar</option>
+          <option>baz</option>
+          <option>quux</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    {{ myForm.value | json}}
+  </form>

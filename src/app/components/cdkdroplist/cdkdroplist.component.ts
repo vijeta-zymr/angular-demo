@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { Student } from './student.model';
 import { StudentService } from './student.service';
+import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
 
 @Component({
   selector: 'app-cdkdroplist',
@@ -9,6 +10,8 @@ import { StudentService } from './student.service';
   styleUrls: ['./cdkdroplist.component.css']
 })
 export class CdkdroplistComponent implements OnInit {
+  myForm: FormGroup;
+  activeNote: string;
   students: Student[] = [];
   students2: Student[] = [
       {
@@ -23,7 +26,25 @@ export class CdkdroplistComponent implements OnInit {
       {
           name: 'Chirag'
       }];
-  constructor(private studentservice: StudentService) { }
+  constructor(private studentservice: StudentService, private fb: FormBuilder) {
+    this.myForm = this.fb.group({
+      title: ['title'],
+      items: fb.array([
+        fb.group({
+          name: fb.control('1'),
+          note: fb.control('quux')
+        }),
+        fb.group({
+          name: fb.control('2'),
+          note: fb.control('bar')
+        }),
+        fb.group({
+          name: fb.control('3'),
+          note: fb.control('baz')
+        })
+      ])
+    });
+   }
 
   drop(event: CdkDragDrop<string[]>) {
     console.log('on element drop via cdk', event);
@@ -44,4 +65,11 @@ export class CdkdroplistComponent implements OnInit {
     });
   }
 
+  dropSecond(event: CdkDragDrop<string[]>) {
+    // moveItemInArray(this.myForm.get('items').controls, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.myForm.get('items').value, event.previousIndex, event.currentIndex);
+  }
+  enter(i) {
+    this.activeNote = this.myForm.get('items')['controls'][i].get('note').value;
+  }
 }
