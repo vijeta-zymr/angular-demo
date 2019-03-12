@@ -4,12 +4,17 @@ import { SearchListComponent } from './search-list/search-list.component';
 import { SearchTextComponent } from './search-text/search-text.component';
 import { DragableComponent } from './components/dragable/dragable.component';
 import { DemodragableComponent } from './components/demodragable/demodragable.component';
+import { CdkdroplistComponent } from './components/cdkdroplist/cdkdroplist.component';
 
 
 const routes: Routes = [
   {
     path: 'demo-dragable',
     component: DemodragableComponent
+  },
+  {
+    path: 'cdkdroplist',
+    component: CdkdroplistComponent
   },
   {
     path: '',

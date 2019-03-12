@@ -3,22 +3,27 @@
     Toolbox
     <div style="border:1px solid gray;height:600px;">
       <ul>
+          <!-- draggable [dragClass]="'drag-over'" [dragData]="item" -->
+          <!-- dnd-draggable [dragEnabled]="true" [dragData]="item" -->
+          <!-- cdkDrag -->
         <li *ngFor="let item of elements" draggable [dragClass]="'drag-over'" [dragData]="item">        
           {{item.name}}
         </li>
-      </ul> 
+      </ul>
     </div>
   </div>
   <div class="col-sm-8" style="border-right:1px solid gray;height:650px;">
     HTML
-    <!-- [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'" -->
-    <div #mainDroppableDiv class="card card-outline-primary mb-3" droppable 
-            (onDrop)="onElementDrop($event)" style="border:1px solid gray;height:600px;">
-      <p>Drop items here</p>
-      <div>
-          <div #div></div>
+    <!-- [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'"  class="card card-outline-primary mb-3" -->
+    <!-- droppable (onDrop)="onElementDrop($event)" -->
+    <!-- dnd-droppable (onDropSuccess)="onElementDrop($event)" -->
+    <!-- cdkDropList (cdkDropListDropped)="drop($event)" -->
+    <div #replaceChildElement>
+      <div #mainDroppableDiv style="border:1px solid gray;height:600px;"
+      droppable (onDrop)="onElementDrop($event)">
+        <div #div></div>
       </div>
-    </div>
+    </div>    
   </div>
   <div class="col-sm-2" style="border-right:1px solid gray;height:650px;">
     Properties - {{item}}
@@ -111,7 +116,7 @@
             </select>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="displayTableColums">
           <td>
             <label for="size">Table Column:</label>
           </td>
