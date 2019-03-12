@@ -232,7 +232,7 @@ export class DragableComponent implements OnInit {
           // dropableDiv.addEventListener('onDrop', (ev) => {
           //   console.log('renderer ondrop event listener');
           // });
-          this.renderer.listen(dropableDiv, 'onDrop', (ev) => {
+          this.renderer.listen(dropableDiv, 'ondrop', (ev) => {
             console.log('renderer onDrop event renderer');
             this.onElementMove(ev);
           });
