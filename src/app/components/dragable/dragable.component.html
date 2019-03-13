@@ -6,7 +6,7 @@
           <!-- draggable [dragClass]="'drag-over'" [dragData]="item" -->
           <!-- dnd-draggable [dragEnabled]="true" [dragData]="item" -->
           <!-- cdkDrag -->
-        <li *ngFor="let item of elements" draggable [dragClass]="'drag-over'" [dragData]="item">        
+        <li *ngFor="let item of elements" [dndDraggable]="item">        
           {{item.name}}
         </li>
       </ul>
@@ -20,7 +20,23 @@
     <!-- cdkDropList (cdkDropListDropped)="drop($event)" -->
     <div #replaceChildElement>
       <div #mainDroppableDiv style="border:1px solid gray;height:600px;"
-      droppable (onDrop)="onElementDrop($event)">
+      dndDropzone (dndDrop)="onElementDrop($event)">
+        <div _ngcontent-c1="" dndDraggable="abc" class="border-div">
+          <input _ngcontent-c1="" id="txt1" readonly="true" style="width: 150px;">
+        </div>
+        <!-- <div
+          cdkDropList
+          #studentsList="cdkDropList"
+          [cdkDropListData]="students"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)">
+          <div #cdkDrag class="example-box" cdkDrag>
+            <input type="text">
+          </div>
+          <div #cdkDrag class="example-box" cdkDrag>
+            <h1>header</h1>
+          </div>
+        </div> -->
         <div #div></div>
       </div>
     </div>    

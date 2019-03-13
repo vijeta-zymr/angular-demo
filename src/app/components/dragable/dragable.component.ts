@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { DropEvent } from 'ng-drag-drop';
+import { DndDropEvent } from 'ngx-drag-drop';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -8,9 +9,24 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./dragable.component.css']
 })
 export class DragableComponent implements OnInit {
+  students: any[] = [
+    {
+        name: 'Siddharth'
+    },
+    {
+        name: 'Jay'
+    },
+    {
+        name: 'Jaydeep'
+    },
+    {
+        name: 'Chirag'
+    }
+  ];
   @ViewChild('replaceChildElement') replaceChildElement: ElementRef;
   @ViewChild('mainDroppableDiv') mainDroppableDiv: ElementRef;
   @ViewChild('div') div: ElementRef;
+  @ViewChild('cdkDrag') cdkDrag: ElementRef;
   public elements = [
     {name: 'Textbox', id: 1},
     {name: 'Label', id: 2},
@@ -54,20 +70,26 @@ export class DragableComponent implements OnInit {
     ev.preventDefault();
   }
 
-  onElementDrop(e: DropEvent) {
+  onElementDrop(e: DndDropEvent) {
     console.log('in element drop metthod', e);
-    if (e.dragData.id === 1) {
+    if (e.data.id === 1) {
       this.item = 'TextBox';
       const dragdiv = this.renderer.createElement('div');
       // set draggable attribute for new div element
-      this.renderer.setAttribute(dragdiv, 'draggable', 'true');
-      this.renderer.setAttribute(dragdiv, 'dragClass', 'drag-over');
-      this.renderer.setAttribute(dragdiv, 'dragData', dragdiv);
+      // ng-drag-drop method
+      // this.renderer.setAttribute(dragdiv, 'draggable', 'true');
+      // this.renderer.setAttribute(dragdiv, 'dragClass', 'drag-over');
+      // ng2-dnd method
+      // this.renderer.setAttribute(dragdiv, 'dnd-draggable', 'true');
+      // this.renderer.setAttribute(dragdiv, 'dragEnabled', 'true');
+      // this.renderer.setAttribute(dragdiv, 'dragData', dragdiv);
+      // ngx-drag-drop method
+      this.renderer.setAttribute(dragdiv, 'dndDraggable', 'abc');
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
-      // this.renderer.listen(dragdiv, 'onDragStart', (ev) => {
-      //   console.log('Drag Started');
-      //   ev.dataTransfer.setData('Text', 'Data from drag start');
-      // });
+      this.renderer.listen(dragdiv, 'dndStart', (ev) => {
+        console.log('Drag Started');
+        // ev.dataTransfer.setData('Text', 'Data from drag start');
+      });
       const input = this.renderer.createElement('input');
       this.renderer.setProperty(input, 'id', 'txt' + this.elementCount);
       this.renderer.setAttribute(input, 'readonly', 'true');
@@ -77,10 +99,19 @@ export class DragableComponent implements OnInit {
       this.setPropertiesOfElement(input, 'textbox');
       // input.addEventListener('click', this.onClick.bind(this));
       // this.div.nativeElement.insertAdjacentHTML('beforeend', '<input type="textbox" #textbox1 onclick="showProperty(1)">');
-    } else if (e.dragData.id === 2) {
+    } else if (e.data.id === 2) {
       this.item = 'Label';
       const dragdiv = this.renderer.createElement('div');
       // set draggable attribute for new div element
+      // ng-drag-drop method
+      // this.renderer.setAttribute(dragdiv, 'draggable', 'true');
+      // this.renderer.setAttribute(dragdiv, 'dragClass', 'drag-over');
+      // ng2-dnd method
+      // this.renderer.setAttribute(dragdiv, 'dnd-draggable', 'true');
+      // this.renderer.setAttribute(dragdiv, 'dragEnabled', 'true');
+      // this.renderer.setAttribute(dragdiv, 'dragData', dragdiv);
+      // ngx-drag-drop method
+      this.renderer.setAttribute(dragdiv, 'dndDraggable', dragdiv);
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('label');
       const text = this.renderer.createText('label');
@@ -90,7 +121,7 @@ export class DragableComponent implements OnInit {
       this.renderer.appendChild(dragdiv, input);
       this.renderer.appendChild(this.div.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'label');
-    } else if (e.dragData.id === 3) {
+    } else if (e.data.id === 3) {
       this.item = 'Header';
       const dragdiv = this.renderer.createElement('div');
       // set draggable attribute for new div element
@@ -103,7 +134,7 @@ export class DragableComponent implements OnInit {
       this.renderer.appendChild(dragdiv, input);
       this.renderer.appendChild(this.div.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'header');
-    } else if (e.dragData.id === 4) {
+    } else if (e.data.id === 4) {
       this.item = 'Link';
       const dragdiv = this.renderer.createElement('div');
       // set draggable attribute for new div element
@@ -116,7 +147,7 @@ export class DragableComponent implements OnInit {
       this.renderer.appendChild(dragdiv, input);
       this.renderer.appendChild(this.div.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'link');
-    } else if (e.dragData.id === 5) {
+    } else if (e.data.id === 5) {
       this.item = 'Button';
       const dragdiv = this.renderer.createElement('div');
       // set draggable attribute for new div element
@@ -127,7 +158,7 @@ export class DragableComponent implements OnInit {
       this.renderer.appendChild(dragdiv, input);
       this.renderer.appendChild(this.div.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'button');
-    } else if (e.dragData.id === 6) {
+    } else if (e.data.id === 6) {
       this.item = 'Table';
       const input = this.renderer.createElement('table');
       this.renderer.setProperty(input, 'id', 'tbl' + this.elementCount);
@@ -255,13 +286,10 @@ export class DragableComponent implements OnInit {
   }
   drop(event: CdkDragDrop<string[]>) {
     console.log('on element drop via cdk', event);
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
-    }
+    // moveItemInArray(this.cdkDrag.nativeElement, event.previousIndex, event.currentIndex);
+    // moveItemInArray(this.cdkDrag.nativeElement, event.previousIndex, event.currentIndex);
+  }
+  onDragStart(event: DragEvent) {
+    console.log('drag started method', JSON.stringify(event, null, 2));
   }
 }

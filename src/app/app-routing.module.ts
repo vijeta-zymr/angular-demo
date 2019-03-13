@@ -5,9 +5,14 @@ import { SearchTextComponent } from './search-text/search-text.component';
 import { DragableComponent } from './components/dragable/dragable.component';
 import { DemodragableComponent } from './components/demodragable/demodragable.component';
 import { CdkdroplistComponent } from './components/cdkdroplist/cdkdroplist.component';
+import { NgxdragdropComponent } from './components/ngxdragdrop/ngxdragdrop.component';
 
 
 const routes: Routes = [
+  {
+    path: 'ngxdragdrop',
+    component: NgxdragdropComponent
+  },
   {
     path: 'demo-dragable',
     component: DemodragableComponent
