@@ -261,11 +261,11 @@ export class DragableComponent implements OnInit {
           this.renderer.setStyle(dropableDiv, 'width', '100%');
           this.renderer.setStyle(dropableDiv, 'height', '100%');
           this.renderer.setStyle(dropableDiv, 'border', '1px solid red');
-          this.renderer.setAttribute(dropableDiv, 'droppable', 'true');
+          this.renderer.setAttribute(dropableDiv, 'dndDropzone', 'true');
           // dropableDiv.addEventListener('onDrop', (ev) => {
           //   console.log('renderer ondrop event listener');
           // });
-          this.renderer.listen(dropableDiv, 'ondrop', (ev) => {
+          this.renderer.listen(dropableDiv, 'dndDrop', (ev) => {
             console.log('renderer onDrop event renderer');
             this.onElementMove(ev);
           });
