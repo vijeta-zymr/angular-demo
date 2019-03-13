@@ -84,7 +84,9 @@ export class DragableComponent implements OnInit {
       // this.renderer.setAttribute(dragdiv, 'dragEnabled', 'true');
       // this.renderer.setAttribute(dragdiv, 'dragData', dragdiv);
       // ngx-drag-drop method
+      this.renderer.setAttribute(dragdiv, 'draggable', 'true');
       this.renderer.setAttribute(dragdiv, 'dndDraggable', 'abc');
+      this.renderer.setAttribute(dragdiv, 'ng-reflect-dnd-draggable', 'abc');
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       this.renderer.listen(dragdiv, 'dndStart', (ev) => {
         console.log('Drag Started');
@@ -95,10 +97,10 @@ export class DragableComponent implements OnInit {
       this.renderer.setAttribute(input, 'readonly', 'true');
       this.renderer.setStyle(input, 'width', '150px');
       this.renderer.appendChild(dragdiv, input);
-      this.renderer.appendChild(this.div.nativeElement, dragdiv);
+      this.renderer.appendChild(this.mainDroppableDiv.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'textbox');
       // input.addEventListener('click', this.onClick.bind(this));
-      // this.div.nativeElement.insertAdjacentHTML('beforeend', '<input type="textbox" #textbox1 onclick="showProperty(1)">');
+      // this.mainDroppableDiv.nativeElement.insertAdjacentHTML('beforeend', '<input type="textbox" #textbox1 onclick="showProperty(1)">');
     } else if (e.data.id === 2) {
       this.item = 'Label';
       const dragdiv = this.renderer.createElement('div');
@@ -119,7 +121,7 @@ export class DragableComponent implements OnInit {
       this.renderer.setProperty(input, 'id', 'lbl' + this.elementCount);
       this.renderer.setAttribute(input, 'readonly', 'true');
       this.renderer.appendChild(dragdiv, input);
-      this.renderer.appendChild(this.div.nativeElement, dragdiv);
+      this.renderer.appendChild(this.mainDroppableDiv.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'label');
     } else if (e.data.id === 3) {
       this.item = 'Header';
@@ -132,7 +134,7 @@ export class DragableComponent implements OnInit {
       this.renderer.setProperty(input, 'id', 'header' + this.elementCount);
       this.renderer.setAttribute(input, 'readonly', 'true');
       this.renderer.appendChild(dragdiv, input);
-      this.renderer.appendChild(this.div.nativeElement, dragdiv);
+      this.renderer.appendChild(this.mainDroppableDiv.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'header');
     } else if (e.data.id === 4) {
       this.item = 'Link';
@@ -145,7 +147,7 @@ export class DragableComponent implements OnInit {
       this.renderer.setProperty(input, 'id', 'link' + this.elementCount);
       this.renderer.setAttribute(input, 'readonly', 'true');
       this.renderer.appendChild(dragdiv, input);
-      this.renderer.appendChild(this.div.nativeElement, dragdiv);
+      this.renderer.appendChild(this.mainDroppableDiv.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'link');
     } else if (e.data.id === 5) {
       this.item = 'Button';
@@ -156,7 +158,7 @@ export class DragableComponent implements OnInit {
       this.renderer.setProperty(input, 'id', 'btn' + this.elementCount);
       input.innerHTML = 'Click';
       this.renderer.appendChild(dragdiv, input);
-      this.renderer.appendChild(this.div.nativeElement, dragdiv);
+      this.renderer.appendChild(this.mainDroppableDiv.nativeElement, dragdiv);
       this.setPropertiesOfElement(input, 'button');
     } else if (e.data.id === 6) {
       this.item = 'Table';
@@ -166,7 +168,7 @@ export class DragableComponent implements OnInit {
       this.renderer.insertBefore(this.replaceChildElement.nativeElement, input, this.mainDroppableDiv.nativeElement);
       this.setPropertiesOfElement(input, 'table');
     } else {
-      this.div.nativeElement.insertAdjacentHTML('beforeend', '<div></div>');
+      this.mainDroppableDiv.nativeElement.insertAdjacentHTML('beforeend', '<div></div>');
     }
   }
   onClick(event) {
