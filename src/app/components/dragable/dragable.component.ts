@@ -9,6 +9,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./dragable.component.css']
 })
 export class DragableComponent implements OnInit {
+  dragDropItems = ['Box 1', 'Box 2', 'Box 3', 'Box 4', 'Box 5', 'Box 6', 'Box 7', 'Box 8'];
   students: any[] = [
     {
         name: 'Siddharth'
@@ -288,10 +289,12 @@ export class DragableComponent implements OnInit {
   }
   drop(event: CdkDragDrop<string[]>) {
     console.log('on element drop via cdk', event);
-    // moveItemInArray(this.cdkDrag.nativeElement, event.previousIndex, event.currentIndex);
-    // moveItemInArray(this.cdkDrag.nativeElement, event.previousIndex, event.currentIndex);
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
   }
   onDragStart(event: DragEvent) {
     console.log('drag started method', JSON.stringify(event, null, 2));
+  }
+  onDragDrop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.dragDropItems, event.previousIndex, event.currentIndex);
   }
 }

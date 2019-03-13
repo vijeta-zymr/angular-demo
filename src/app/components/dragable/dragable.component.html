@@ -24,18 +24,16 @@
         <div _ngcontent-c1="" dndDraggable="abc" class="border-div">
           <input _ngcontent-c1="" id="txt1" readonly="true" style="width: 150px;">
         </div>
-        <!-- <div
-          cdkDropList
-          #studentsList="cdkDropList"
-          [cdkDropListData]="students"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)">
-          <div #cdkDrag class="example-box" cdkDrag>
+        <!-- <div cdkDropList (cdkDropListDropped)="drop($event)">
+          <div [id]="1" #cdkDragDiv class="example-box" cdkDrag>
             <input type="text">
           </div>
-          <div #cdkDrag class="example-box" cdkDrag>
+          <div [id]="2" #cdkDragDiv class="example-box" cdkDrag>
             <h1>header</h1>
           </div>
+        </div> -->
+        <!-- <div cdkDropList (cdkDropListDropped)="onDragDrop($event)">
+          <div class="box" *ngFor="let ddItem of dragDropItems" cdkDrag>{{ddItem}}</div>
         </div> -->
         <!-- <div #div></div> -->
       </div>
