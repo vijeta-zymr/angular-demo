@@ -21,7 +21,7 @@
     <div #replaceChildElement>
       <div #mainDroppableDiv style="border:1px solid gray;height:600px;"
       dndDropzone (dndDrop)="onElementDrop($event)">
-        <div _ngcontent-c1="" dndDraggable="abc" class="border-div">
+        <div _ngcontent-c1="" dndDraggable="abc" class="border-div" (dndEnd)="onDragEnd($event)">
           <input _ngcontent-c1="" id="txt1" readonly="true" style="width: 150px;">
         </div>
         <!-- <div cdkDropList (cdkDropListDropped)="drop($event)">
@@ -36,7 +36,6 @@
           <div class="box" *ngFor="let ddItem of dragDropItems" cdkDrag>{{ddItem}}</div>
         </div> -->
         <!-- <div #div></div> -->
-      </div>
     </div>    
   </div>
   <div class="col-sm-2" style="border-right:1px solid gray;height:650px;">
