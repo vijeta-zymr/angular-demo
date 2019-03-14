@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgDragDropModule } from 'ng-drag-drop';
-// import { DndModule } from 'ng2-dnd';
 import { DndModule } from 'ngx-drag-drop';
 import { DndListModule } from 'ngx-drag-and-drop-lists';
 import { DragDropModule } from '@angular/cdk/drag-drop';

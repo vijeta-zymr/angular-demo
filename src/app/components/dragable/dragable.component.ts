@@ -92,9 +92,9 @@ export class DragableComponent implements OnInit {
       // this.renderer.setAttribute(dragdiv, 'draggable', 'true');
       // this.renderer.setAttribute(dragdiv, 'dndDraggable', 'abc');
       // this.renderer.setAttribute(dragdiv, 'ng-reflect-dnd-draggable', 'abc');
-      // this.renderer.listen(dragdiv, 'dndEnd', (ev) => {
-      //   console.log('Drag Ended');
-      // });
+      this.renderer.listen(dragdiv, 'onDragEnd', (ev) => {
+        console.log('Drag Ended');
+      });
       this.renderer.setAttribute(dragdiv, 'class', 'border-div');
       const input = this.renderer.createElement('input');
       this.renderer.setProperty(input, 'id', 'txt' + this.elementCount);
