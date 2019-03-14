@@ -6,7 +6,7 @@
           <!-- draggable [dragData]="item" -->
           <!-- cdkDrag -->
           <!-- [dndDraggable]="item" -->
-        <li *ngFor="let item of elements" draggable [dndDraggable]="item">        
+        <li *ngFor="let item of elements" draggable [dragData]="item">        
           {{item.name}}
         </li>
       </ul>
@@ -19,7 +19,7 @@
     <!-- dndDropzone (dndDrop)="onElementDrop($event)" (dndDragover)="onDragover($event)" -->
     <div #replaceChildElement>
       <div #mainDroppableDiv style="border:1px solid gray;height:600px;"
-      dndDropzone (dndDrop)="onElementDrop($event)">
+      droppable (onDrop)="onElementDrop($event)">
         <!-- <div _ngcontent-c1="" dndDraggable="abc" class="border-div" (dndEnd)="onDragEnd($event)">
           <input _ngcontent-c1="" id="txt1" readonly="true" style="width: 150px;">
         </div> -->
@@ -40,8 +40,8 @@
                 </div>
             </div>
         </form>         -->
-    </div>    
-  </div>
+      </div>    
+    </div>
   </div>
   <div class="col-sm-2" style="border-right:1px solid gray;height:650px;">
     Properties - {{item}}
