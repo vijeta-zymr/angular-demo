@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/co
 import { DropEvent } from 'ng-drag-drop';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
 
 @Component({
   selector: 'app-dragable',
@@ -9,25 +10,10 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./dragable.component.css']
 })
 export class DragableComponent implements OnInit {
-  dragDropItems = ['Box 1', 'Box 2', 'Box 3', 'Box 4', 'Box 5', 'Box 6', 'Box 7', 'Box 8'];
-  students: any[] = [
-    {
-        name: 'Siddharth'
-    },
-    {
-        name: 'Jay'
-    },
-    {
-        name: 'Jaydeep'
-    },
-    {
-        name: 'Chirag'
-    }
-  ];
+  // myForm: FormGroup;
   @ViewChild('replaceChildElement') replaceChildElement: ElementRef;
   @ViewChild('mainDroppableDiv') mainDroppableDiv: ElementRef;
-  @ViewChild('div') div: ElementRef;
-  @ViewChild('cdkDrag') cdkDrag: ElementRef;
+
   public elements = [
     {name: 'Textbox', id: 1},
     {name: 'Label', id: 2},
@@ -61,7 +47,25 @@ export class DragableComponent implements OnInit {
     public displayTableColums: boolean;
     public tableColumns: number;
 
-  constructor(elRef: ElementRef, private renderer: Renderer2) { }
+  constructor(elRef: ElementRef, private renderer: Renderer2, private fb: FormBuilder) {
+    // this.myForm = this.fb.group({
+    //   title: ['title'],
+    //   items: fb.array([
+    //     fb.group({
+    //       name: fb.control('1'),
+    //       field: fb.control('header')
+    //     }),
+    //     fb.group({
+    //       name: fb.control('2'),
+    //       field: fb.control('label')
+    //     }),
+    //     fb.group({
+    //       name: fb.control('3'),
+    //       field: fb.control('link')
+    //     })
+    //   ])
+    // });
+  }
 
   ngOnInit() {
     this.itemSelected = false;
@@ -172,9 +176,9 @@ export class DragableComponent implements OnInit {
       this.mainDroppableDiv.nativeElement.insertAdjacentHTML('beforeend', '<div></div>');
     }
   }
-  onClick(event) {
-    console.log('onclick event', event);
-  }
+  // onClick(event) {
+  //   console.log('onclick event abcdss', event);
+  // }
   setPropertiesOfElement(input: Element, type: string) {
     this.renderer.listen(input, 'click', (event) => {
       console.log('onclick event', input);
@@ -184,8 +188,10 @@ export class DragableComponent implements OnInit {
       const Attr = target.attributes;
       // fetch id of elemennt
       this.elementId = Attr[0].ownerElement.id;
+      console.log('this.elementId',this.elementId);
       // fetch value of element
       if (type === 'textbox') {
+        console.log('in if');
         this.size = Attr[0].ownerElement.size;
         this.displayElementValue = true;
         this.elementValue = Attr[0].ownerElement.value;
@@ -229,7 +235,7 @@ export class DragableComponent implements OnInit {
     this.displaySrc = true;
   }
   onPropertyChange(event: any, property: string, pc: number) {
-    console.log('pc', pc);
+    console.log('on property change method');
     if (pc === 2) {
       const elem: Element = document.getElementById(this.elementId).parentElement;
       this.renderer.setStyle(elem, property, event.target.value + 'px');
@@ -294,10 +300,14 @@ export class DragableComponent implements OnInit {
   onDragStart(event: DragEvent) {
     console.log('drag started method', JSON.stringify(event, null, 2));
   }
-  onDragDrop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.dragDropItems, event.previousIndex, event.currentIndex);
-  }
   onDragEnd(event: DragEvent) {
     console.log('drag ended', JSON.stringify(event, null, 2));
   }
+  onDragover(event: DragEvent) {
+    console.log('dragover', JSON.stringify(event, null, 2));
+  }
+  // dropStatic(event: CdkDragDrop<string[]>) {
+  //   // moveItemInArray(this.myForm.get('items').controls, event.previousIndex, event.currentIndex);
+  //   moveItemInArray(this.myForm.get('items').value, event.previousIndex, event.currentIndex);
+  // }
 }

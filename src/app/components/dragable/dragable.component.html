@@ -3,10 +3,10 @@
     Toolbox
     <div style="border:1px solid gray;height:600px;">
       <ul>
-          <!-- draggable [dragClass]="'drag-over'" [dragData]="item" -->
-          <!-- dnd-draggable [dragEnabled]="true" [dragData]="item" -->
+          <!-- draggable [dragData]="item" -->
           <!-- cdkDrag -->
-        <li *ngFor="let item of elements" [dndDraggable]="item">        
+          <!-- [dndDraggable]="item" -->
+        <li *ngFor="let item of elements" draggable [dndDraggable]="item">        
           {{item.name}}
         </li>
       </ul>
@@ -14,29 +14,34 @@
   </div>
   <div class="col-sm-8" style="border-right:1px solid gray;height:650px;">
     HTML
-    <!-- [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'"  class="card card-outline-primary mb-3" -->
     <!-- droppable (onDrop)="onElementDrop($event)" -->
-    <!-- dnd-droppable (onDropSuccess)="onElementDrop($event)" -->
     <!-- cdkDropList (cdkDropListDropped)="drop($event)" -->
+    <!-- dndDropzone (dndDrop)="onElementDrop($event)" (dndDragover)="onDragover($event)" -->
     <div #replaceChildElement>
       <div #mainDroppableDiv style="border:1px solid gray;height:600px;"
       dndDropzone (dndDrop)="onElementDrop($event)">
-        <div _ngcontent-c1="" dndDraggable="abc" class="border-div" (dndEnd)="onDragEnd($event)">
+        <!-- <div _ngcontent-c1="" dndDraggable="abc" class="border-div" (dndEnd)="onDragEnd($event)">
           <input _ngcontent-c1="" id="txt1" readonly="true" style="width: 150px;">
-        </div>
-        <!-- <div cdkDropList (cdkDropListDropped)="drop($event)">
-          <div [id]="1" #cdkDragDiv class="example-box" cdkDrag>
-            <input type="text">
-          </div>
-          <div [id]="2" #cdkDragDiv class="example-box" cdkDrag>
-            <h1>header</h1>
-          </div>
         </div> -->
-        <!-- <div cdkDropList (cdkDropListDropped)="onDragDrop($event)">
-          <div class="box" *ngFor="let ddItem of dragDropItems" cdkDrag>{{ddItem}}</div>
-        </div> -->
-        <!-- <div #div></div> -->
+        <!-- <form [formGroup]="myForm">
+            <div cdkDropList (cdkDropListDropped)="dropStatic($event)">
+                <div [id]="i" *ngFor="let item of myForm.get('items').controls; let i=index;" cdkDrag #elem="cdkDrag">
+                    <div [formGroup]="item">
+                        <ng-container *ngIf="item.value.name == 1">
+                            <input type="text">
+                        </ng-container>                      
+                        <ng-container *ngIf="item.value.name == 2">
+                            <h1>Header</h1>
+                        </ng-container>                       
+                        <ng-container *ngIf="item.value.name == '3'">
+                            <a href="">link</a>
+                        </ng-container> 
+                    </div>
+                </div>
+            </div>
+        </form>         -->
     </div>    
+  </div>
   </div>
   <div class="col-sm-2" style="border-right:1px solid gray;height:650px;">
     Properties - {{item}}
