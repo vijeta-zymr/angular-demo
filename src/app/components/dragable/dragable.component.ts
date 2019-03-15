@@ -121,6 +121,8 @@ export class DragableComponent implements OnInit {
           this.dragEnd(ev);
         });
         this.renderer.setAttribute(dragdiv, 'class', 'border-div');
+        this.renderer.setStyle(dragdiv, 'width', 'min-content');
+        this.renderer.setStyle(dragdiv, 'height', 'min-content');
         const input = this.renderer.createElement('input');
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('swap');
@@ -214,11 +216,11 @@ export class DragableComponent implements OnInit {
         this.setPropertiesOfElement(input, 'button');
       } else if (id === '6') {
         this.item = 'Table';
-        const input = this.renderer.createElement('table');
-        this.renderer.setProperty(input, 'id', 'tbl' + this.elementCount);
-        input.innerHTML = 'Click me!!';
-        this.renderer.insertBefore(this.replaceChildElement.nativeElement, input, this.mainDroppableDiv.nativeElement);
-        this.setPropertiesOfElement(input, 'table');
+        const inputTable = this.renderer.createElement('table');
+        this.renderer.setProperty(inputTable, 'id', 'tbl' + this.elementCount);
+        inputTable.innerHTML = 'Click me!!';
+        this.renderer.insertBefore(this.replaceChildElement.nativeElement, inputTable, this.mainDroppableDiv.nativeElement);
+        this.setPropertiesOfElement(inputTable, 'table');
       } else {
         this.mainDroppableDiv.nativeElement.insertAdjacentHTML('beforeend', '<div></div>');
       }
@@ -239,16 +241,17 @@ export class DragableComponent implements OnInit {
   // }
   setPropertiesOfElement(input: Element, type: string) {
     this.renderer.listen(input, 'click', (event) => {
-      console.log('onclick event', input);
+      console.log('onclick event', input, type);
       this.itemSelected = true;
       this.item = type;
       const target = event.target || event.srcElement || event.currentTarget;
       const Attr = target.attributes;
+      console.log('Attr[0].ownerElement', Attr[0].ownerElement.type);
       // fetch id of elemennt
       this.elementId = Attr[0].ownerElement.id;
       console.log('this.elementId', this.elementId);
       // fetch value of element
-      if (type === 'textbox') {
+      if (Attr[0].ownerElement.type === 'text') {
         console.log('in if');
         this.size = Attr[0].ownerElement.size;
         this.displayElementValue = true;
@@ -313,7 +316,7 @@ export class DragableComponent implements OnInit {
         // this.renderer.removeAttribute(this.mainDroppableDiv.nativeElement, 'dnd-droppable');
         // this.renderer.removeAttribute(this.mainDroppableDiv.nativeElement, 'onDropSuccess');
         // this.mainDroppableDiv.nativeElement.remove();
-        this.renderer.setStyle(this.mainDroppableDiv.nativeElement, 'border', '1px solid red');
+        // this.renderer.setStyle(this.mainDroppableDiv.nativeElement, 'border', '1px solid red');
         elem.innerHTML = '';
         const tr = this.renderer.createElement('tr');
         this.renderer.appendChild(elem, tr);
@@ -321,12 +324,12 @@ export class DragableComponent implements OnInit {
           const td = this.renderer.createElement('td');
           this.renderer.appendChild(tr, td);
           const dropableDiv = this.renderer.createElement('div');
-          this.renderer.setProperty(dropableDiv, 'id', 'tableDiv' + tdi);
+          this.renderer.setProperty(dropableDiv, 'id', this.elementId + 'Div' + tdi);
           // assign droppable attribute to new generated div
           // this.renderer.addClass(dropableDiv, 'card card-outline-primary mb-3');
           this.renderer.setStyle(dropableDiv, 'width', '100%');
           this.renderer.setStyle(dropableDiv, 'height', '100%');
-          this.renderer.setStyle(dropableDiv, 'border', '1px solid red');
+          // this.renderer.setStyle(dropableDiv, 'border', '1px solid red');
           // dropableDiv.addEventListener('drop', (ev) => {
           //   console.log('renderer drop event listener');
           //   this.onElementDrop(ev);
