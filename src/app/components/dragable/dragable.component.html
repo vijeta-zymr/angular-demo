@@ -4,9 +4,15 @@
     <div style="border:1px solid gray;height:600px;">
       <ul>
           <!-- draggable [dragData]="item" -->
-          <!-- cdkDrag -->
-          <!-- [dndDraggable]="item" -->
-        <li *ngFor="let item of elements" draggable [dragData]="item">        
+          <!-- cdkDrag (cdkDragEnded)="onElementDrop(item)" (cdkDragMoved)="dndMoved($event)" -->
+          <!-- [dndDraggable]="item"
+              (dndStart)="onDragStart($event)"
+              (dndCopied)="onDraggableCopied($event)"
+              (dndMoved)="onDraggableMoved($event)"
+              (dndCanceled)="onDragCanceled($event)"
+              (dndEnd)="onDragEnd($event)" -->
+        <li *ngFor="let item of elements" id="{{item.id}}" draggable="true" (dragstart)="drag($event)"
+        (dragend)="dragEnd($event)">        
           {{item.name}}
         </li>
       </ul>
@@ -19,13 +25,7 @@
     <!-- dndDropzone (dndDrop)="onElementDrop($event)" (dndDragover)="onDragover($event)" -->
     <div #replaceChildElement>
       <div #mainDroppableDiv style="border:1px solid gray;height:600px;"
-      droppable (onDrop)="onElementDrop($event)">
-        <div _ngcontent-c1="" class="border-div" draggable>
-          <input _ngcontent-c1="" id="txt1" readonly="true" style="width: 150px;">
-        </div>
-        <!-- <div _ngcontent-c1="" dndDraggable="abc" class="border-div" (dndEnd)="onDragEnd($event)">
-          <input _ngcontent-c1="" id="txt1" readonly="true" style="width: 150px;">
-        </div> -->
+      (drop)="onElementDrop($event)" (dragover)="allowDrop($event)">
         <!-- <form [formGroup]="myForm">
             <div cdkDropList (cdkDropListDropped)="dropStatic($event)">
                 <div [id]="i" *ngFor="let item of myForm.get('items').controls; let i=index;" cdkDrag #elem="cdkDrag">
