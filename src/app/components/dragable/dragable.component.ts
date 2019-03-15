@@ -92,7 +92,7 @@ export class DragableComponent implements OnInit {
     ev.dataTransfer.setData('x', ev.clientX);
     ev.dataTransfer.setData('y', ev.clientY);
   }
-  onElementDrop(e) {
+  onElementDrop(e, parentDivElement?: any) {
     e.preventDefault();
     const effect = e.dataTransfer.getData('effect');
     console.log('drop method', effect);
@@ -134,7 +134,12 @@ export class DragableComponent implements OnInit {
         this.renderer.appendChild(dragdiv, input);
         this.renderer.appendChild(button, buttontext);
         this.renderer.appendChild(dragdiv, button);
-        this.renderer.appendChild(this.mainDroppableDiv.nativeElement, dragdiv);
+        if (parentDivElement) {
+          const PDE: Element = document.getElementById(parentDivElement);
+          this.renderer.appendChild(PDE, dragdiv);
+        } else {
+          this.renderer.appendChild(this.mainDroppableDiv.nativeElement, dragdiv);
+        }
         this.setPropertiesOfElement(input, 'textbox');
         // input.addEventListener('click', this.onClick.bind(this));
         // this.mainDroppableDiv.nativeElement.insertAdjacentHTML('beforeend',
@@ -322,13 +327,17 @@ export class DragableComponent implements OnInit {
           this.renderer.setStyle(dropableDiv, 'width', '100%');
           this.renderer.setStyle(dropableDiv, 'height', '100%');
           this.renderer.setStyle(dropableDiv, 'border', '1px solid red');
-          dropableDiv.addEventListener('drop', (ev) => {
-            console.log('renderer drop event listener');
-            this.onElementDrop(ev);
-          });
-          this.renderer.listen(dropableDiv, 'dndDrop', (ev) => {
-            console.log('renderer onDrop event renderer');
+          // dropableDiv.addEventListener('drop', (ev) => {
+          //   console.log('renderer drop event listener');
+          //   this.onElementDrop(ev);
+          // });
+          this.renderer.listen(dropableDiv, 'drop', (ev) => {
+            console.log('renderer onDrop event');
             this.onElementMove(ev);
+          });
+          this.renderer.listen(dropableDiv, 'dragover', (ev) => {
+            console.log('renderer dragover event');
+            this.allowDrop(ev);
           });
           this.renderer.appendChild(td, dropableDiv);
         }
@@ -346,6 +355,9 @@ export class DragableComponent implements OnInit {
   }
   onElementMove(event: any) {
     console.log('on element move', event);
+    const parentDivElement = event.srcElement.parentElement.children[0].id;
+    console.log('parentDivElement', parentDivElement);
+    this.onElementDrop(event, parentDivElement);
   }
 
   // cdk drag drop events -------------------------------------------------------------
