@@ -132,7 +132,7 @@ export class DragableComponent implements OnInit {
         });
         this.renderer.setProperty(input, 'id', 'txt' + this.elementCount);
         this.renderer.setAttribute(input, 'readonly', 'true');
-        this.renderer.setStyle(input, 'min-width', '150px');
+        this.renderer.setStyle(input, 'width', '150px');
         this.renderer.appendChild(dragdiv, input);
         this.renderer.appendChild(button, buttontext);
         this.renderer.appendChild(dragdiv, button);
