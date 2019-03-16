@@ -251,14 +251,11 @@ export class DragableComponent implements OnInit {
     } else if (effect === 'move') {
       const divId = e.dataTransfer.getData('divId');
       const divElem: Element = document.getElementById(divId);
-      // this.renderer.setStyle(divElem, 'position', 'absolute');
-      // this.renderer.setStyle(divElem, 'left', x + 'px');
-      // this.renderer.setStyle(divElem, 'top', y + 'px');
       console.log('divElem', divElem);
       console.log('parent divElem', divElem.parentElement);
-
-      const TDivElem = e.srcElement.parentElement.children[0].id;
+      const TDivElem = e.srcElement.parentElement.children[0];
       console.log('TDivElem', TDivElem);
+      this.renderer.appendChild(TDivElem, divElem);
     } else {
 
     }
