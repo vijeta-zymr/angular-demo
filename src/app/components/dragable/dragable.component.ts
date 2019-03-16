@@ -89,8 +89,8 @@ export class DragableComponent implements OnInit {
     console.log('drag started method', ev);
     ev.dataTransfer.setData('effect', 'move');
     ev.dataTransfer.setData('divId', ev.srcElement.id);
-    ev.dataTransfer.setData('x', ev.clientX);
-    ev.dataTransfer.setData('y', ev.clientY);
+    ev.dataTransfer.setData('offsetx', ev.x);
+    ev.dataTransfer.setData('offsety', ev.y);
   }
   // set draggable attribute for new div element
   // ng-drag-drop method
@@ -254,13 +254,19 @@ export class DragableComponent implements OnInit {
         this.mainDroppableDiv.nativeElement.insertAdjacentHTML('beforeend', '<div></div>');
       }
     } else if (effect === 'move') {
-      const x = e.dataTransfer.getData('x');
-      const y = e.dataTransfer.getData('y');
+      const offsetx = e.dataTransfer.getData('offsetx');
+      const offsety = e.dataTransfer.getData('offsety');
       const divId = e.dataTransfer.getData('divId');
       const divElem: Element = document.getElementById(divId);
-      this.renderer.setStyle(divElem, 'position', 'absolute');
-      this.renderer.setStyle(divElem, 'left', x + 'px');
-      this.renderer.setStyle(divElem, 'top', y + 'px');
+      // this.renderer.setStyle(divElem, 'position', 'absolute');
+      // this.renderer.setStyle(divElem, 'left', x + 'px');
+      // this.renderer.setStyle(divElem, 'top', y + 'px');
+
+      console.log('divElem', divElem);
+      console.log('parebt divElem', divElem.parentElement);
+
+      const TDivElem: Element = document.elementFromPoint(offsetx, offsety);
+      console.log('TDivElem', TDivElem);
     } else {
 
     }
@@ -365,7 +371,7 @@ export class DragableComponent implements OnInit {
           // });
           this.renderer.listen(dropableDiv, 'drop', (ev) => {
             console.log('renderer onDrop event');
-            this.onElementMove(ev);
+            this.onElementPlace(ev);
           });
           this.renderer.listen(dropableDiv, 'dragover', (ev) => {
             console.log('renderer dragover event');
@@ -385,8 +391,8 @@ export class DragableComponent implements OnInit {
       this.renderer.setStyle(elem, 'text-align', changedAlignValue.name);
     }
   }
-  onElementMove(event: any) {
-    console.log('on element move', event);
+  onElementPlace(event: any) {
+    console.log('on element place', event);
     const parentDivElement = event.srcElement.parentElement.children[0].id;
     console.log('parentDivElement', parentDivElement);
     this.onElementDrop(event, parentDivElement);
