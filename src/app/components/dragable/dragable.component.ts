@@ -81,16 +81,11 @@ export class DragableComponent implements OnInit {
   }
   dragEnd(ev) {
     console.log('dragEnd', ev);
-    ev.dataTransfer.setData('id', ev.target.id);
-    ev.dataTransfer.setData('effect', 'create');
-    this.onElementDrop(ev);
   }
   dragStared(ev) {
     console.log('drag started method', ev);
     ev.dataTransfer.setData('effect', 'move');
     ev.dataTransfer.setData('divId', ev.srcElement.id);
-    ev.dataTransfer.setData('offsetx', ev.x);
-    ev.dataTransfer.setData('offsety', ev.y);
   }
   // set draggable attribute for new div element
   // ng-drag-drop method
@@ -254,18 +249,15 @@ export class DragableComponent implements OnInit {
         this.mainDroppableDiv.nativeElement.insertAdjacentHTML('beforeend', '<div></div>');
       }
     } else if (effect === 'move') {
-      const offsetx = e.dataTransfer.getData('offsetx');
-      const offsety = e.dataTransfer.getData('offsety');
       const divId = e.dataTransfer.getData('divId');
       const divElem: Element = document.getElementById(divId);
       // this.renderer.setStyle(divElem, 'position', 'absolute');
       // this.renderer.setStyle(divElem, 'left', x + 'px');
       // this.renderer.setStyle(divElem, 'top', y + 'px');
-
       console.log('divElem', divElem);
-      console.log('parebt divElem', divElem.parentElement);
+      console.log('parent divElem', divElem.parentElement);
 
-      const TDivElem: Element = document.elementFromPoint(offsetx, offsety);
+      const TDivElem = e.srcElement.parentElement.children[0].id;
       console.log('TDivElem', TDivElem);
     } else {
 

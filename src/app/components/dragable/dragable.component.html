@@ -11,8 +11,9 @@
               (dndMoved)="onDraggableMoved($event)"
               (dndCanceled)="onDragCanceled($event)"
               (dndEnd)="onDragEnd($event)" -->
+              <!-- (dragend)="dragEnd($event)" -->
         <li *ngFor="let item of elements" id="{{item.id}}" draggable="true" (dragstart)="drag($event)"
-        (dragend)="dragEnd($event)">        
+        >        
           {{item.name}}
         </li>
       </ul>
