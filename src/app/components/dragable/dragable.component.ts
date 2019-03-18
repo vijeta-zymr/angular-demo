@@ -256,6 +256,7 @@ export class DragableComponent implements OnInit {
         this.renderer.setAttribute(dragdiv, 'class', 'border-div');
         this.renderer.setStyle(dragdiv, 'width', 'min-content');
         this.renderer.setStyle(dragdiv, 'height', 'min-content');
+        // this.renderer.setStyle(dragdiv, 'display', 'inline-block');
         this.renderer.setAttribute(dragdiv, 'draggable', 'true');
         this.renderer.listen(dragdiv, 'dragstart', (ev) => {
           console.log('Drag started');
@@ -264,6 +265,7 @@ export class DragableComponent implements OnInit {
         // create button element
         const input = this.renderer.createElement('button');
         this.renderer.setProperty(input, 'id', 'btn' + this.elementCount);
+        this.renderer.setStyle(input, 'display', 'inline-table');
         input.innerHTML = 'Click';
         // create close button element
         const button = this.renderer.createElement('button');
@@ -286,6 +288,7 @@ export class DragableComponent implements OnInit {
         this.item = 'Table';
         const inputTable = this.renderer.createElement('table');
         this.renderer.setProperty(inputTable, 'id', 'tbl' + this.elementCount);
+        this.renderer.setStyle(inputTable, 'table-layout', 'auto');
         inputTable.innerHTML = 'Click me!!';
         // this.renderer.appendChild(this.mainDroppableDiv.nativeElement, inputTable);
         this.renderer.insertBefore(this.replaceChildElement.nativeElement, inputTable, this.mainDroppableDiv.nativeElement);
@@ -381,12 +384,14 @@ export class DragableComponent implements OnInit {
         this.renderer.appendChild(elem, tr);
         for (let tdi = 1; tdi <= event.target.value; tdi++) {
           const td = this.renderer.createElement('td');
+          // this.renderer.setStyle(td, 'min-width', '20%');
           this.renderer.appendChild(tr, td);
           const dropableDiv = this.renderer.createElement('div');
           this.renderer.setProperty(dropableDiv, 'id', this.elementId + 'Div' + tdi);
           // assign droppable attribute to new generated div
           this.renderer.setStyle(dropableDiv, 'width', '100%');
           this.renderer.setStyle(dropableDiv, 'height', '100%');
+          // this.renderer.setStyle(dropableDiv, 'display', 'inline-flex');
           // this.renderer.setStyle(dropableDiv, 'border', '1px solid red');
           this.renderer.listen(dropableDiv, 'drop', (ev) => {
             console.log('renderer onDrop event');
