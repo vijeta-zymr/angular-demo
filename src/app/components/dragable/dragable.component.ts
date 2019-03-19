@@ -163,7 +163,13 @@ export class DragableComponent implements OnInit {
         const text = this.renderer.createText('label');
         this.renderer.setProperty(input, 'id', 'lbl' + this.elementCount);
         this.renderer.setAttribute(input, 'readonly', 'true');
-        this.renderer.setStyle(input, 'min-width', '150px');
+        if (parentDivElement) {
+          const TPDE: Element = document.getElementById(parentDivElement).parentElement;
+          const dynamicWidth = TPDE.clientWidth - 30;
+          this.renderer.setStyle(input, 'width', dynamicWidth + 'px');
+        } else {
+          this.renderer.setStyle(input, 'width', '888px');
+        }
         // create close button element
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
@@ -201,6 +207,13 @@ export class DragableComponent implements OnInit {
         const text = this.renderer.createText('h1');
         this.renderer.setProperty(input, 'id', 'header' + this.elementCount);
         this.renderer.setAttribute(input, 'readonly', 'true');
+        if (parentDivElement) {
+          const TPDE: Element = document.getElementById(parentDivElement).parentElement;
+          const dynamicWidth = TPDE.clientWidth - 20;
+          this.renderer.setStyle(input, 'width', dynamicWidth + 'px');
+        } else {
+          this.renderer.setStyle(input, 'width', '888px');
+        }
         // create close button element
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
@@ -237,6 +250,13 @@ export class DragableComponent implements OnInit {
         const text = this.renderer.createText('link');
         this.renderer.setProperty(input, 'id', 'link' + this.elementCount);
         this.renderer.setAttribute(input, 'readonly', 'true');
+        if (parentDivElement) {
+          const TPDE: Element = document.getElementById(parentDivElement).parentElement;
+          const dynamicWidth = TPDE.clientWidth - 20;
+          this.renderer.setStyle(input, 'width', dynamicWidth + 'px');
+        } else {
+          this.renderer.setStyle(input, 'width', '888px');
+        }
         // create close button element
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
@@ -276,6 +296,13 @@ export class DragableComponent implements OnInit {
         this.renderer.setStyle(input, 'display', 'inline-block');
         // this.renderer.setStyle(input, 'flex', '1');
         input.innerHTML = 'Click';
+        if (parentDivElement) {
+          const TPDE: Element = document.getElementById(parentDivElement).parentElement;
+          const dynamicWidth = TPDE.clientWidth - 20;
+          this.renderer.setStyle(input, 'width', dynamicWidth + 'px');
+        } else {
+          this.renderer.setStyle(input, 'width', '888px');
+        }
         // create close button element
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
@@ -352,7 +379,7 @@ export class DragableComponent implements OnInit {
         this.elementText = null;
       }
       // fetch href of element
-      if (Attr[0].ownerElement.type === 'link') {
+      if (Attr[0].ownerElement.innerHTML === 'link') {
         this.displaySrc = true;
         this.src = (Attr[0].ownerElement.href).replace('http://localhost:4200/', '');
       } else {
