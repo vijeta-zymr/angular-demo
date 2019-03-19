@@ -105,7 +105,7 @@ export class DragableComponent implements OnInit {
         this.renderer.setProperty(dragdiv, 'id', 'div' + this.elementCount);
         this.renderer.setAttribute(dragdiv, 'draggable', 'true');
         this.renderer.listen(dragdiv, 'dragstart', (ev) => {
-          console.log('Drag started');
+          // console.log('Drag started');
           this.dragStared(ev);
         });
         // this.renderer.listen(dragdiv, 'dragend', (ev) => {
@@ -119,12 +119,18 @@ export class DragableComponent implements OnInit {
         const input = this.renderer.createElement('input');
         this.renderer.setProperty(input, 'id', 'txt' + this.elementCount);
         this.renderer.setAttribute(input, 'readonly', 'true');
-        this.renderer.setStyle(input, 'width', '150px');
+        if (parentDivElement) {
+          const TPDE: Element = document.getElementById(parentDivElement).parentElement;
+          const dynamicWidth = TPDE.clientWidth - 20;
+          this.renderer.setStyle(input, 'width', dynamicWidth + 'px');
+        } else {
+          this.renderer.setStyle(input, 'width', '888px');
+        }
         // create close button element
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
         this.renderer.listen(button, 'click', (ev) => {
-          console.log('Button Click');
+          // console.log('Button Click');
           this.buttonRemoveClick(ev);
         });
         this.renderer.appendChild(dragdiv, input);
@@ -146,7 +152,7 @@ export class DragableComponent implements OnInit {
         this.renderer.setProperty(dragdiv, 'id', 'div' + this.elementCount);
         this.renderer.setAttribute(dragdiv, 'draggable', 'true');
         this.renderer.listen(dragdiv, 'dragstart', (ev) => {
-          console.log('Drag started');
+          // console.log('Drag started');
           this.dragStared(ev);
         });
         this.renderer.setAttribute(dragdiv, 'class', 'border-div');
@@ -162,7 +168,7 @@ export class DragableComponent implements OnInit {
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
         this.renderer.listen(button, 'click', (ev) => {
-          console.log('Button Click');
+          // console.log('Button Click');
           this.buttonRemoveClick(ev);
         });
         this.renderer.appendChild(input, text);
@@ -172,6 +178,7 @@ export class DragableComponent implements OnInit {
         if (parentDivElement) {
           const PDE: Element = document.getElementById(parentDivElement);
           this.renderer.appendChild(PDE, dragdiv);
+          // this.renderer.removeStyle(PDE, 'width');
         } else {
           this.renderer.appendChild(this.mainDroppableDiv.nativeElement, dragdiv);
         }
@@ -186,7 +193,7 @@ export class DragableComponent implements OnInit {
         this.renderer.setStyle(dragdiv, 'height', 'min-content');
         this.renderer.setAttribute(dragdiv, 'draggable', 'true');
         this.renderer.listen(dragdiv, 'dragstart', (ev) => {
-          console.log('Drag started');
+          // console.log('Drag started');
           this.dragStared(ev);
         });
         // create header element
@@ -198,7 +205,7 @@ export class DragableComponent implements OnInit {
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
         this.renderer.listen(button, 'click', (ev) => {
-          console.log('Button Click');
+          // console.log('Button Click');
           this.buttonRemoveClick(ev);
         });
         this.renderer.appendChild(input, text);
@@ -222,7 +229,7 @@ export class DragableComponent implements OnInit {
         this.renderer.setStyle(dragdiv, 'height', 'min-content');
         this.renderer.setAttribute(dragdiv, 'draggable', 'true');
         this.renderer.listen(dragdiv, 'dragstart', (ev) => {
-          console.log('Drag started');
+          // console.log('Drag started');
           this.dragStared(ev);
         });
         // create link element
@@ -234,7 +241,7 @@ export class DragableComponent implements OnInit {
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
         this.renderer.listen(button, 'click', (ev) => {
-          console.log('Button Click');
+          // console.log('Button Click');
           this.buttonRemoveClick(ev);
         });
         this.renderer.appendChild(input, text);
@@ -256,22 +263,24 @@ export class DragableComponent implements OnInit {
         this.renderer.setAttribute(dragdiv, 'class', 'border-div');
         this.renderer.setStyle(dragdiv, 'width', 'min-content');
         this.renderer.setStyle(dragdiv, 'height', 'min-content');
-        // this.renderer.setStyle(dragdiv, 'display', 'inline-block');
+        this.renderer.setStyle(dragdiv, 'max-width', 'inherit');
         this.renderer.setAttribute(dragdiv, 'draggable', 'true');
         this.renderer.listen(dragdiv, 'dragstart', (ev) => {
-          console.log('Drag started');
+          // console.log('Drag started');
           this.dragStared(ev);
         });
         // create button element
         const input = this.renderer.createElement('button');
         this.renderer.setProperty(input, 'id', 'btn' + this.elementCount);
-        this.renderer.setStyle(input, 'display', 'inline-table');
+        this.renderer.setStyle(input, 'max-width', 'inherit');
+        this.renderer.setStyle(input, 'display', 'inline-block');
+        // this.renderer.setStyle(input, 'flex', '1');
         input.innerHTML = 'Click';
         // create close button element
         const button = this.renderer.createElement('button');
         const buttontext = this.renderer.createText('X');
         this.renderer.listen(button, 'click', (ev) => {
-          console.log('Button Click');
+          // console.log('Button Click');
           this.buttonRemoveClick(ev);
         });
         this.renderer.appendChild(dragdiv, input);
@@ -285,10 +294,11 @@ export class DragableComponent implements OnInit {
         }
         this.setPropertiesOfElement(input, 'button');
       } else if (id === '6') {
+        this.tableColumns = null;
         this.item = 'Table';
         const inputTable = this.renderer.createElement('table');
         this.renderer.setProperty(inputTable, 'id', 'tbl' + this.elementCount);
-        this.renderer.setStyle(inputTable, 'table-layout', 'auto');
+        this.renderer.setStyle(inputTable, 'table-layout', 'fixed');
         inputTable.innerHTML = 'Click me!!';
         // this.renderer.appendChild(this.mainDroppableDiv.nativeElement, inputTable);
         this.renderer.insertBefore(this.replaceChildElement.nativeElement, inputTable, this.mainDroppableDiv.nativeElement);
@@ -299,10 +309,10 @@ export class DragableComponent implements OnInit {
     } else if (effect === 'move') {
       const divId = e.dataTransfer.getData('divId');
       const divElem: Element = document.getElementById(divId);
-      console.log('divElem', divElem);
-      console.log('parent divElem', divElem.parentElement);
+      // console.log('divElem', divElem);
+      // console.log('parent divElem', divElem.parentElement);
       const TDivElem = e.srcElement.parentElement.children[0];
-      console.log('TDivElem', TDivElem);
+      // console.log('TDivElem', TDivElem);
       this.renderer.appendChild(TDivElem, divElem);
     } else {
       // nothing to do now
@@ -314,12 +324,12 @@ export class DragableComponent implements OnInit {
       this.item = type;
       const target = event.target || event.srcElement || event.currentTarget;
       const Attr = target.attributes;
-      console.log('Attr check abcd test', Attr[0].ownerElement.innerHTML);
+      // console.log('Attr check abcd test', Attr[0].ownerElement.innerHTML);
       // fetch id of elemennt
       this.elementId = Attr[0].ownerElement.id;
       // fetch value of element
       if (Attr[0].ownerElement.type === 'text') {
-        console.log('in if');
+        // console.log('in if');
         this.size = Attr[0].ownerElement.size;
         this.displayElementValue = true;
         this.elementValue = Attr[0].ownerElement.value;
@@ -384,21 +394,24 @@ export class DragableComponent implements OnInit {
         this.renderer.appendChild(elem, tr);
         for (let tdi = 1; tdi <= event.target.value; tdi++) {
           const td = this.renderer.createElement('td');
-          // this.renderer.setStyle(td, 'min-width', '20%');
+          this.renderer.setStyle(td, 'min-width', '20%');
           this.renderer.appendChild(tr, td);
           const dropableDiv = this.renderer.createElement('div');
           this.renderer.setProperty(dropableDiv, 'id', this.elementId + 'Div' + tdi);
           // assign droppable attribute to new generated div
           this.renderer.setStyle(dropableDiv, 'width', '100%');
           this.renderer.setStyle(dropableDiv, 'height', '100%');
-          // this.renderer.setStyle(dropableDiv, 'display', 'inline-flex');
+          this.renderer.setStyle(dropableDiv, 'box-sizing', 'border-box');
+          this.renderer.setStyle(dropableDiv, 'display', 'flex');
+          this.renderer.setStyle(dropableDiv, 'flex-direction', 'column');
+          // this.renderer.setStyle(dropableDiv, 'overflow', 'hidden');
           // this.renderer.setStyle(dropableDiv, 'border', '1px solid red');
           this.renderer.listen(dropableDiv, 'drop', (ev) => {
-            console.log('renderer onDrop event');
+            // console.log('renderer onDrop event');
             this.onElementPlace(ev);
           });
           this.renderer.listen(dropableDiv, 'dragover', (ev) => {
-            console.log('renderer dragover event');
+            // console.log('renderer dragover event');
             this.allowDrop(ev);
           });
           this.renderer.appendChild(td, dropableDiv);
